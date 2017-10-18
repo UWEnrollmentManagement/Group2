@@ -13,7 +13,7 @@
           "homepage": "https://www.schilz.org",
           "role": "Developer"
       }
-  ]
+  ],
   "autoload": {
     "classmap": [
       "src/"
