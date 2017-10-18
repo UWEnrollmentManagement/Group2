@@ -1,6 +1,19 @@
 {
   "name": "uwdoem/group",
   "description": "Client library for the University of Washington Group Web Services",
+  "authors": [
+      {
+          "name": "Page Bonifaci",
+          "email": "bonpacific@protonmail.com",
+          "role": "Developer"
+      },
+      {
+          "name": "Joseph Schilz",
+          "email": "joseph@schilz.org",
+          "homepage": "https://www.schilz.org",
+          "role": "Developer"
+      }
+  ]
   "autoload": {
     "classmap": [
       "src/"
