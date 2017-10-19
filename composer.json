@@ -30,7 +30,6 @@
   "require-dev": {
     "uwdoem/standard": "*",
     "phpunit/phpunit": "6.*",
-    "phpdocumentor/phpdocumentor": "2.7.*",
     "codeclimate/php-test-reporter": "dev-master",
     "squizlabs/php_codesniffer": "2.*",
     "sunra/php-simple-html-dom-parser": "^1.5"

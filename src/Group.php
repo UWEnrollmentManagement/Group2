@@ -380,7 +380,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_year()
+    public function getCourseYear()
     {
         if (isset($this->course_year) === false) {
             $this->getGroup();
@@ -391,7 +391,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_curr()
+    public function getCourseCurr()
     {
         if (isset($this->course_curr) === false) {
             $this->getGroup();
@@ -402,7 +402,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_no()
+    public function getCourseNo()
     {
         if (isset($this->course_no) === false) {
             $this->getGroup();
@@ -413,7 +413,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_sect()
+    public function getCourseSect()
     {
         if (isset($this->course_sect) === false) {
             $this->getGroup();
@@ -424,7 +424,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_sln()
+    public function getCourseSln()
     {
         if (isset($this->course_sln) === false) {
             $this->getGroup();
@@ -435,7 +435,7 @@ class Group
     /**
      * @return array
      */
-    public function getCourse_instructors()
+    public function getCourseInstructors()
     {
         if (isset($this->course_instructors) === false) {
             $this->getGroup();
@@ -542,7 +542,7 @@ class Group
     }
 
     /**
-     * @param string $member_id is a person id, E.G. 'bonifacp'
+     * @param string $member_id Is a person id, E.G. 'bonifacp'
      * @return string
      */
     public function getEffectiveMember($member_id)
@@ -559,7 +559,7 @@ class Group
     }
 
     /**
-     * @param string $affiliate_id may be identifier (e.g. uw_enrollment) or regid (e. g 7)
+     * @param string $affiliate_id May be identifier (e.g. uw_enrollment) or regid (e. g 7)
      * @return array
      */
     public function getAffiliate($affiliate_id)
@@ -573,6 +573,7 @@ class Group
 
     /**
      * Queries GWS to get the groups history.
+     * @return void
      */
     public function getGroupHistory()
     {
@@ -585,6 +586,7 @@ class Group
 
     /**
      * Queries GWS to for direct members of the group. Members are added to the object.
+     * @return void
      */
     protected function getDirectMembership()
     {
@@ -604,6 +606,7 @@ class Group
 
     /**
      * Queries GWS to for effective members of the group. Members are added to the object.
+     * @return void
      */
     protected function getEffectiveMembership()
     {
@@ -663,10 +666,10 @@ class Group
     protected function parseGroup($data)
     {
         $html = HtmlDomParser::str_get_html($data);
-
+        print_r('parseGroup: ' . $html->find("span.regid", 0)->innertext);
         $this->regid = ($html->find("span.regid", 0)) ? $html->find("span.regid", 0)->innertext : null;
 
-        // Determine if the query returned an actual GRoup, or en empty object.
+        // Determine if the query returned an actual Group, or en empty object.
         // GWS has some templating issues, where missing data leaves the templating code. So if it's missing the regid,
         // we just skip the rest of the parsing.
         if ($this->regid === '${group.regid}') {
@@ -842,16 +845,16 @@ class Group
     protected function parseAffiliate($data)
     {
         $html = HtmlDomParser::str_get_html($data);
-        $affiliate['group_identifier']  = ($html->find('span.identifier', 0))
+        $affiliate['group_identifier']  = (empty($html->find('span.identifier', 0)) === false)
                                             ? ($html->find('span.identifier', 0)->innertext)
                                             : ('');
-        $affiliate['affiliate_name']    = ($html->find('span.affiliate', 0))
+        $affiliate['affiliate_name']    = (empty($html->find('span.affiliate', 0)) === false)
                                             ? ($html->find('span.affiliate', 0)->name)
                                             : ('');
-        $affiliate['affiliate_status']  = ($html->find('span.affiliate', 0))
+        $affiliate['affiliate_status']  = (empty($html->find('span.affiliate', 0)) === false)
                                             ? ($html->find('span.affiliate', 0)->status)
                                             : ('');
-        $affiliate['error']             = ($html->find('span.error', 0))
+        $affiliate['error']             = (empty($html->find('span.error', 0)) === false)
                                             ? ($html->find('span.error', 0)->innertext)
                                             : ('');
 

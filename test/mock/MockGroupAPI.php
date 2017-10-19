@@ -5,8 +5,26 @@ namespace UWDOEM\Group\Test;
 use UWDOEM\Connection\Connection;
 use UWDOEM\Group\Group;
 
-class MockGroup extends Group
+class MockGroupAPI extends Group
 {
+
+    /**
+     * Queries GWS to generate a Group, given an identifier. Identifier may be group id, or group regid
+     *
+     * @param string $identifier may be identifier (e.g. uw_enrollment) or regid (e. g 7)
+     */
+    public function getMockGroup()
+    {
+
+        if (is_null($this->regid)) {
+            $resp = static::getGroupConnection()->execGET(
+                $this->identifier
+            );
+
+            $this->parseGroup($resp);
+        }
+        return $this;
+    }
 
     /**
      * @param string $baseUrl
@@ -22,7 +40,7 @@ class MockGroup extends Group
                 throw new \Exception("You must define the constant $constant before using this library.");
             }
         }
-        return new MockConnection(
+        return new Connection(
             UW_WS_BASE_PATH . $baseUrl,
             UW_WS_SSL_KEY_PATH,
             UW_WS_SSL_CERT_PATH,
@@ -44,3 +62,4 @@ class MockGroup extends Group
         return static::$groupConnection;
     }
 }
+
