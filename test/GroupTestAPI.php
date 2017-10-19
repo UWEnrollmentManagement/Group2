@@ -12,10 +12,10 @@ use PHPUnit_Framework_TestCase;
 require '../vendor/autoload.php';
 
 // Intialize the required settings
-define('UW_WS_BASE_PATH', 'https://iam-ws.u.washington.edu:7443/group_sws/v2/');
-define('UW_WS_SSL_KEY_PATH', './test-certs/prod.schsupp.osfa.washington.edu.key');
-define('UW_WS_SSL_CERT_PATH', './test-certs/prod.schsupp.osfa.washington.edu.pem');
-define('UW_WS_SSL_KEY_PASSWD', 'money4You');  // Can be blank for no password: ''
+define('UW_WS_BASE_PATH', '');
+define('UW_WS_SSL_KEY_PATH', '');
+define('UW_WS_SSL_CERT_PATH', '');
+define('UW_WS_SSL_KEY_PASSWD', '');  // Can be blank for no password: ''
 define('UW_WS_VERBOSE', true);  // (Optional) Whether to include verbose cURL messages in error messages.
 
 

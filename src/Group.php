@@ -369,7 +369,7 @@ class Group
     /**
      * @return string
      */
-    public function getCourse_qtr()
+    public function getCourseQtr()
     {
         if (isset($this->course_qtr) === false) {
             $this->getGroup();
@@ -497,7 +497,7 @@ class Group
     {
         /** @var null|Person $person */
 
-        if (is_null($this->regid)) {
+        if (is_null($this->regid) === true) {
             $resp = static::getGroupConnection()->execGET(
                 $this->identifier
             );
@@ -512,7 +512,7 @@ class Group
      * Queries GWS to for groups. Search parameters are defined at
      * https://wiki.cac.washington.edu/display/infra/Groups+WebService+Search
      *
-     * @param string $search_string formatted like "name=thing_one&stem=thing_two"
+     * @param string $search_string E.G. "name=thing_one&stem=thing_two".
      * @return array
      */
     public function searchGroups($search_string)
@@ -524,13 +524,13 @@ class Group
     }
 
     /**
-     * @param string $member_id is a person id, E.G. 'bonifacp'
+     * @param string $member_id E.G. 'bonifacp'.
      * @return string
      */
     public function getMember($member_id)
     {
 
-        if (is_null($this->regid)) {
+        if (is_null($this->regid) === true) {
             throw new Exception('Member Id not specified');
         } else {
             $resp = static::getGroupConnection()->execGET(
@@ -542,12 +542,12 @@ class Group
     }
 
     /**
-     * @param string $member_id Is a person id, E.G. 'bonifacp'
+     * @param string $member_id E.G. 'bonifacp'.
      * @return string
      */
     public function getEffectiveMember($member_id)
     {
-        if (is_null($this->regid)) {
+        if (is_null($this->regid) === true) {
             throw new Exception('Member Id not specified');
         } else {
             $resp = static::makeConnection()->execGET(
@@ -559,7 +559,7 @@ class Group
     }
 
     /**
-     * @param string $affiliate_id May be identifier (e.g. uw_enrollment) or regid (e. g 7)
+     * @param string $affiliate_id May be identifier (uw_enrollment) or regid (3ff762ad88924cdd80d5b376c4ba3e1d).
      * @return array
      */
     public function getAffiliate($affiliate_id)
@@ -662,12 +662,14 @@ class Group
 
     /**
      * @param string $data
+     * @return void
      */
     protected function parseGroup($data)
     {
         $html = HtmlDomParser::str_get_html($data);
-        print_r('parseGroup: ' . $html->find("span.regid", 0)->innertext);
-        $this->regid = ($html->find("span.regid", 0)) ? $html->find("span.regid", 0)->innertext : null;
+        $this->regid = (is_null($html->find("span.regid", 0)) === false)
+                            ? $html->find("span.regid", 0)->innertext
+                            : null;
 
         // Determine if the query returned an actual Group, or en empty object.
         // GWS has some templating issues, where missing data leaves the templating code. So if it's missing the regid,
@@ -676,59 +678,59 @@ class Group
             $this->regid = null;
         } else {
             //Get the basic/core Group data
-            $this->title             = ($html->find("span.title           ", 0))
+            $this->title             = (is_null($html->find("span.title           ", 0)) === false)
                                             ? $html->find("span.title           ", 0)->innertext
                                             : null;
 
-            $this->description       = ($html->find("span.description     ", 0))
+            $this->description       = (is_null($html->find("span.description     ", 0)) === false)
                                             ? $html->find("span.description     ", 0)->innertext
                                             : null;
 
-            $this->contact           = ($html->find("span.contact         ", 0))
+            $this->contact           = (is_null($html->find("span.contact         ", 0)) === false)
                                             ? $html->find("span.contact         ", 0)->innertext
                                             : null;
 
-            $this->createtime        = ($html->find("span.createtime      ", 0))
+            $this->createtime        = (is_null($html->find("span.createtime      ", 0)) === false)
                                             ? $html->find("span.createtime      ", 0)->innertext
                                             : null;
 
-            $this->modifytime        = ($html->find("span.modifytime      ", 0))
+            $this->modifytime        = (is_null($html->find("span.modifytime      ", 0)) === false)
                                             ? $html->find("span.modifytime      ", 0)->innertext
                                             : null;
 
-            $this->membermodifytime  = ($html->find("span.membermodifytime", 0))
+            $this->membermodifytime  = (is_null($html->find("span.membermodifytime", 0)) === false)
                                             ? $html->find("span.membermodifytime", 0)->innertext
                                             : null;
 
-            $this->authnfactor       = ($html->find("span.authnfactor     ", 0))
+            $this->authnfactor       = (is_null($html->find("span.authnfactor     ", 0)) === false)
                                             ? $html->find("span.authnfactor     ", 0)->innertext
                                             : null;
 
-            $this->classification    = ($html->find("span.classification  ", 0))
+            $this->classification    = (is_null($html->find("span.classification  ", 0)) === false)
                                             ? $html->find("span.classification  ", 0)->innertext
                                             : null;
 
-            $this->dependson         = ($html->find("span.dependson       ", 0))
+            $this->dependson         = (is_null($html->find("span.dependson       ", 0)) === false)
                                             ? $html->find("span.dependson       ", 0)->innertext
                                             : null;
 
-            $this->gid               = ($html->find("span.gid             ", 0))
+            $this->gid               = (is_null($html->find("span.gid             ", 0)) === false)
                                             ? $html->find("span.gid             ", 0)->innertext
                                             : null;
 
-            $this->emailenabled      = ($html->find("span.emailenabled    ", 0))
+            $this->emailenabled      = (is_null($html->find("span.emailenabled    ", 0)) === false)
                                             ? $html->find("span.emailenabled    ", 0)->innertext
                                             : null;
 
-            $this->publishemail      = ($html->find("span.publishemail    ", 0))
+            $this->publishemail      = (is_null($html->find("span.publishemail    ", 0)) === false)
                                             ? $html->find("span.publishemail    ", 0)->innertext
                                             : null;
 
-            $this->reporttoorig      = ($html->find("span.reporttoorig    ", 0))
+            $this->reporttoorig      = (is_null($html->find("span.reporttoorig    ", 0)) === false)
                                             ? $html->find("span.reporttoorig    ", 0)->innertext
                                             : null;
 
-            $this->status            = ($html->find("div.status           ", 0))
+            $this->status            = (is_null($html->find("div.status           ", 0)) === false)
                                             ? $html->find("div.status           ", 0)->innertext
                                             : null;
 
@@ -759,36 +761,37 @@ class Group
                 array_push($this->course_instructors, $instructor->innertext);
             }
 
-            $this->course_qtr  = ($html->find("span.course_qtr", 0))
+            $this->course_qtr  = (is_null($html->find("span.course_qtr", 0)) === false)
                                     ? $html->find("span.course_qtr", 0)->innertext
                                     : null;
 
-            $this->course_year = ($html->find("span.course_year", 0))
+            $this->course_year = (is_null($html->find("span.course_year", 0)) === false)
                                     ? $html->find("span.course_year", 0)->innertext
                                     : null;
 
-            $this->course_curr = ($html->find("span.course_curr", 0))
+            $this->course_curr = (is_null($html->find("span.course_curr", 0)) === false)
                                     ? $html->find("span.course_curr", 0)->innertext
                                     : null;
 
-            $this->course_no   = ($html->find("span.course_no", 0))
+            $this->course_no   = (is_null($html->find("span.course_no", 0)) === false)
                                     ? $html->find("span.course_no", 0)->innertext
                                     : null;
 
-            $this->course_sect = ($html->find("span.course_sect", 0))
+            $this->course_sect = (is_null($html->find("span.course_sect", 0)) === false)
                                     ? $html->find("span.course_sect", 0)->innertext
                                     : null;
 
-            $this->course_sln  = ($html->find("span.course_sln", 0))
+            $this->course_sln  = (is_null($html->find("span.course_sln", 0)) === false)
                                     ? $html->find("span.course_sln", 0)->innertext
                                     : null;
-
         }
     }
 
     /**
      * parses Membership data and saves it to the Group object
+     *
      * @param string $data
+     * @return void
      */
     protected function parseMembership($data)
     {
@@ -803,7 +806,9 @@ class Group
 
     /**
      * parses History data and saves it to the Group object
+     *
      * @param string $data
+     * @return void
      */
     protected function parseHistory($data)
     {
