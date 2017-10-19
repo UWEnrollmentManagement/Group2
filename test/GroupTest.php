@@ -9,7 +9,7 @@ if (!class_exists('\PHPUnit\Framework\TestCase') &&
 }
 use PHPUnit_Framework_TestCase;
 
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
 // Intialize the required settings
 define('UW_WS_BASE_PATH', '');

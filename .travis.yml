@@ -7,7 +7,7 @@ addons:
 before_script:
   - composer install
 script:
-  - phpunit --configuration test/phpunit.xml ./test/GroupTest.php
+  - ./vendor/bin/phpunit ./test/GroupTest.php
   - ./vendor/bin/phpcs --ignore=*/vendor/*,*/test/*,*/bin/* --standard=./vendor/uwdoem/standard/ruleset.xml .
   - ./vendor/bin/phpcs --standard=PSR2 test
 after_script:
