@@ -486,6 +486,8 @@ class Group
     public function __construct($identifier)
     {
         $this->identifier = $identifier;
+//        $this->getGroup();
+        return $this;
     }
 
     /**
@@ -498,9 +500,13 @@ class Group
         /** @var null|Person $person */
 
         if (is_null($this->regid) === true) {
-            $resp = static::getGroupConnection()->execGET(
-                $this->identifier
-            );
+            try {
+                $resp = static::getGroupConnection()->execGET(
+                    $this->identifier
+                );
+            } catch (\Exception $e) {
+                throw $e;
+            }
 
             $this->parseGroup($resp);
         }
@@ -531,7 +537,7 @@ class Group
     {
 
         if (is_null($this->regid) === true) {
-            throw new Exception('Member Id not specified');
+            throw new \Exception('Member Id not specified');
         } else {
             $resp = static::getGroupConnection()->execGET(
                 "$this->identifier/member/$member_id"
@@ -548,7 +554,7 @@ class Group
     public function getEffectiveMember($member_id)
     {
         if (is_null($this->regid) === true) {
-            throw new Exception('Member Id not specified');
+            throw new \Exception('Member Id not specified');
         } else {
             $resp = static::makeConnection()->execGET(
                 "$this->identifier/effective_member/$member_id"
@@ -594,7 +600,7 @@ class Group
             $this->getGroup();
         }
         if (is_null($this->regid) === true) {
-            throw new Exception('Group Id not specified');
+            throw new \Exception('Group Id not specified');
         }
         $resp = static::getGroupConnection()->execGET(
             "$this->identifier/member"
@@ -614,16 +620,19 @@ class Group
             $this->getGroup();
         }
         if (is_null($this->regid) === true) {
-            throw new Exception('Group Id not specified');
+            throw new \Exception('Group Id not specified');
         }
-        $resp = static::getGroupConnection()->execGET(
-            "$this->identifier/effective_member"
-        );
+        try {
+            $resp = static::getGroupConnection()->execGET(
+                "$this->identifier/effective_member"
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
 
         $this->effectivemembers = [];
         $this->parseMembership($resp);
     }
-
 
 
     /**
@@ -633,7 +642,7 @@ class Group
      */
     protected static function makeConnection($baseUrl)
     {
-        $requiredConstants = ["UW_WS_BASE_PATH", "UW_WS_SSL_KEY_PATH", "UW_WS_SSL_CERT_PATH", "UW_WS_SSL_KEY_PASSWD"];
+        $requiredConstants = ["UW_GWS_BASE_PATH", "UW_GWS_SSL_KEY_PATH", "UW_GWS_SSL_CERT_PATH", "UW_GWS_SSL_KEY_PASSWD"];
         foreach ($requiredConstants as $constant) {
             if (defined($constant) === false) {
                 throw new \Exception("You must define the constant $constant before using this library.");
@@ -641,11 +650,11 @@ class Group
         }
 
         return new Connection(
-            UW_WS_BASE_PATH . $baseUrl,
-            UW_WS_SSL_KEY_PATH,
-            UW_WS_SSL_CERT_PATH,
-            UW_WS_SSL_KEY_PASSWD,
-            defined("UW_WS_VERBOSE") && UW_WS_VERBOSE
+            UW_GWS_BASE_PATH . $baseUrl,
+            UW_GWS_SSL_KEY_PATH,
+            UW_GWS_SSL_CERT_PATH,
+            UW_GWS_SSL_KEY_PASSWD,
+            defined("UW_GWS_VERBOSE") && UW_GWS_VERBOSE
         );
     }
 

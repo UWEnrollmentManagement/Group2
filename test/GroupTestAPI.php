@@ -9,18 +9,24 @@ if (!class_exists('\PHPUnit\Framework\TestCase') &&
 }
 use PHPUnit_Framework_TestCase;
 
-require '../vendor/autoload.php';
+//require '../vendor/autoload.php';
 
 // Intialize the required settings
-define('UW_WS_BASE_PATH', '');
-define('UW_WS_SSL_KEY_PATH', '');
-define('UW_WS_SSL_CERT_PATH', '');
-define('UW_WS_SSL_KEY_PASSWD', '');  // Can be blank for no password: ''
-define('UW_WS_VERBOSE', true);  // (Optional) Whether to include verbose cURL messages in error messages.
-
+define('UW_GWS_BASE_PATH', '');
+define('UW_GWS_SSL_KEY_PATH', '');
+define('UW_GWS_SSL_CERT_PATH', '');
+define('UW_GWS_SSL_KEY_PASSWD', '');  // Can be blank for no password: ''
+define('UW_GWS_VERBOSE', true);  // (Optional) Whether to include verbose cURL messages in error messages.
 
 class GroupTestAPI extends \PHPUnit\Framework\TestCase
 {
+
+    public function testDev()
+    {
+        // Test live data existing group
+        $p = new MockGroupAPI("3ff762ad88924cdd80d5b376c4ba3e1d");
+        $this->assertEquals($p->getRegId(), "3ff762ad88924cdd80d5b376c4ba3e1d");
+    }
 
     public function testAPIGroup()
     {
@@ -41,6 +47,7 @@ class GroupTestAPI extends \PHPUnit\Framework\TestCase
         // Check the membership is working as expected
         $this->assertContains('bonifacp', $p->getMembers());
         $this->assertContains('jschilz', $p->getDirectMembers());
+        $this->assertContains('jschilz', $p->getEffectivemembers());
 
         $this->assertNotContains('blarg', $p->getMembers());
     }
@@ -80,12 +87,12 @@ class GroupTestAPI extends \PHPUnit\Framework\TestCase
         $p = new MockGroupAPI("76c9668f17284516a047e1e1181abff2");
         $history = $p->getHistory();
         $this->assertEquals(
-            $history[0],
-            [   'date' => '1507937578338',
+            end($history),
+            [   'date' => '1507658976841',
                 'user' => 'bonifacp',
-                'actas' => 'GrouperSysAdmin',
-                'activity' => 'affiliate',
-                'description' => "set affiliate 'google' to inactive (forward=sender=none)"
+                'actas' => '',
+                'activity' => 'group',
+                'description' => "created: 'uw_enrollment_eis_gws_test'"
             ]
         );
     }

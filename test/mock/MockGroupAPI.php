@@ -13,18 +13,18 @@ class MockGroupAPI extends Group
      *
      * @param string $identifier may be identifier (e.g. uw_enrollment) or regid (e. g 7)
      */
-    public function getMockGroup()
-    {
-
-        if (is_null($this->regid)) {
-            $resp = static::getGroupConnection()->execGET(
-                $this->identifier
-            );
-
-            $this->parseGroup($resp);
-        }
-        return $this;
-    }
+//    public function getMockGroup()
+//    {
+//
+//        if (is_null($this->regid)) {
+//            $resp = static::getGroupConnection()->execGET(
+//                $this->identifier
+//            );
+//
+//            $this->parseGroup($resp);
+//        }
+//        return $this;
+//    }
 
     /**
      * @param string $baseUrl
@@ -33,7 +33,7 @@ class MockGroupAPI extends Group
      */
     protected static function makeConnection($baseUrl)
     {
-        $requiredConstants = ["UW_WS_BASE_PATH", "UW_WS_SSL_KEY_PATH", "UW_WS_SSL_CERT_PATH", "UW_WS_SSL_KEY_PASSWD"];
+        $requiredConstants = ["UW_GWS_BASE_PATH", "UW_GWS_SSL_KEY_PATH", "UW_GWS_SSL_CERT_PATH", "UW_GWS_SSL_KEY_PASSWD"];
 
         foreach ($requiredConstants as $constant) {
             if (defined($constant) === false) {
@@ -41,11 +41,11 @@ class MockGroupAPI extends Group
             }
         }
         return new Connection(
-            UW_WS_BASE_PATH . $baseUrl,
-            UW_WS_SSL_KEY_PATH,
-            UW_WS_SSL_CERT_PATH,
-            UW_WS_SSL_KEY_PASSWD,
-            defined("UW_WS_VERBOSE") && UW_WS_VERBOSE,
+            UW_GWS_BASE_PATH . $baseUrl,
+            UW_GWS_SSL_KEY_PATH,
+            UW_GWS_SSL_CERT_PATH,
+            UW_GWS_SSL_KEY_PASSWD,
+            defined("UW_GWS_VERBOSE") && UW_GWS_VERBOSE,
             [CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_SSL_VERIFYHOST => false]
         );
