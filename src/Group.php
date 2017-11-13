@@ -486,7 +486,6 @@ class Group
     public function __construct($identifier)
     {
         $this->identifier = $identifier;
-//        $this->getGroup();
         return $this;
     }
 
@@ -642,7 +641,12 @@ class Group
      */
     protected static function makeConnection($baseUrl)
     {
-        $requiredConstants = ["UW_GWS_BASE_PATH", "UW_GWS_SSL_KEY_PATH", "UW_GWS_SSL_CERT_PATH", "UW_GWS_SSL_KEY_PASSWD"];
+        $requiredConstants = [
+            "UW_GWS_BASE_PATH",
+            "UW_GWS_SSL_KEY_PATH",
+            "UW_GWS_SSL_CERT_PATH",
+            "UW_GWS_SSL_KEY_PASSWD"
+        ];
         foreach ($requiredConstants as $constant) {
             if (defined($constant) === false) {
                 throw new \Exception("You must define the constant $constant before using this library.");
