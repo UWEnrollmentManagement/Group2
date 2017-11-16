@@ -25,7 +25,7 @@
     ]
   },
   "require": {
-    "uwdoem/connection": "^2.2.0"
+    "uwdoem/connection": "3.*"
   },
   "require-dev": {
     "uwdoem/standard": "*",
