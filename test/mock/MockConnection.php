@@ -15,8 +15,14 @@ class MockConnection extends Connection
      * @param array        $options
      * @throws \Exception If the provided $sslKey or $sslCert paths are not valid.
      */
-    public function __construct($baseUrl, $sslKey, $sslCert, $sslKeyPassword = null, $verbose = false, $options = [])
-    {
+    public function __construct(
+        $baseUrl,
+        $sslKey,
+        $sslCert,
+        $sslKeyPassword = null,
+        $verbose = false,
+        array $options = []
+    ) {
 
         $this->baseUrl = $baseUrl;
 
@@ -56,36 +62,36 @@ class MockConnection extends Connection
      * @return mixed
      * @throws \Exception If cURL encounters an error.
      */
-    protected function exec()
-    {
-        $this->addXUwActAs();
+//    protected function exec()
+//    {
+//        $this->addXUwActAs();
+//
+//        curl_setopt_array($this->curl, $this->options);
+//
+//        $resp = $this->doExec();
+//
+//        if (curl_errno($this->curl) !== 0) {
+//            $errorText = 'Request Error:' . curl_error($this->curl);
+//
+//            if ($this->logFile !== null) {
+//                rewind($this->logFile);
+//                $errorText .= " " . stream_get_contents($this->logFile);
+//            }
+//
+//            throw new \Exception($errorText);
+//        }
+//        return $resp;
+//    }
 
-        curl_setopt_array($this->curl, $this->options);
+//    public function getCurl()
+//    {
+//        return $this->curl;
+//    }
 
-        $resp = $this->doExec();
-
-        if (curl_errno($this->curl) !== 0) {
-            $errorText = 'Request Error:' . curl_error($this->curl);
-
-            if ($this->logFile !== null) {
-                rewind($this->logFile);
-                $errorText .= " " . stream_get_contents($this->logFile);
-            }
-
-            throw new \Exception($errorText);
-        }
-        return $resp;
-    }
-
-    public function getCurl()
-    {
-        return $this->curl;
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
-    }
+//    public function getOptions()
+//    {
+//        return $this->options;
+//    }
 
     protected function makeSlug($url)
     {
@@ -102,6 +108,8 @@ class MockConnection extends Connection
     protected function doExec()
     {
         $url = curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL);
-        return file_get_contents(getcwd() . "/test/responses/{$this->makeSlug($url)}");
+        $info = curl_getinfo($this->curl);
+        $data = file_get_contents(getcwd() . "/test/responses/{$this->makeSlug($url)}");
+        return new \UWDOEM\Connection\ConnectionReturn($data, $info);
     }
 }

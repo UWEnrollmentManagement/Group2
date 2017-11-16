@@ -507,7 +507,7 @@ class Group
                 throw $e;
             }
 
-            $this->parseGroup($resp);
+            $this->parseGroup($resp->getData());
         }
 
         return $this;
@@ -525,7 +525,7 @@ class Group
         $resp = static::makeConnection('')->execGET(
             "search/?$search_string"
         );
-        return $this->parseSearch($resp);
+        return $this->parseSearch($resp->getData());
     }
 
     /**
@@ -542,7 +542,7 @@ class Group
                 "$this->identifier/member/$member_id"
             );
 
-            return $this->parseMember($resp);
+            return $this->parseMember($resp->getData());
         }
     }
 
@@ -573,7 +573,7 @@ class Group
             "$this->identifier/affiliate/$affiliate_id"
         );
 
-        return $this->parseAffiliate($resp);
+        return $this->parseAffiliate($resp->getData());
     }
 
     /**
@@ -586,7 +586,7 @@ class Group
             "$this->identifier/history"
         );
 
-        $this->parseHistory($resp);
+        $this->parseHistory($resp->getData());
     }
 
     /**
@@ -606,7 +606,7 @@ class Group
         );
 
         $this->directmembers = [];
-        $this->parseMembership($resp);
+        $this->parseMembership($resp->getData());
     }
 
     /**
@@ -630,7 +630,7 @@ class Group
         }
 
         $this->effectivemembers = [];
-        $this->parseMembership($resp);
+        $this->parseMembership($resp->getData());
     }
 
 
