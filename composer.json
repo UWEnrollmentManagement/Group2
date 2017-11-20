@@ -4,14 +4,12 @@
   "authors": [
       {
           "name": "Page Bonifaci",
-          "email": "BonPacific@protonmail.com",
-          "role": "Maintainer"
+          "email": "BonPacific@protonmail.com"
       },
       {
           "name": "Joseph Schilz",
           "email": "joseph@schilz.org",
-          "homepage": "https://www.schilz.org",
-          "role": "Developer"
+          "homepage": "https://www.schilz.org"
       }
   ],
   "autoload": {
