@@ -1,5 +1,5 @@
 {
-  "name": "uwdoem/group",
+  "name": "uwdoem/group2",
   "description": "Client library for the University of Washington Group Web Services",
   "type": "Library",
   "license": "MIT",
@@ -8,6 +8,7 @@
       {
         "name": "Page Bonifaci",
         "email": "BonPacific@protonmail.com",
+        "homepage": "https://staff.washington.edu/bonifacp/",
         "role": "Developer"
       },
       {
