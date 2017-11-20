@@ -1,6 +1,9 @@
 {
   "name": "uwdoem/group",
   "description": "Client library for the University of Washington Group Web Services",
+  "type": "Library",
+  "license": "MIT",
+  "homepage": "https://github.com/UWEnrollmentManagement/Group",
   "authors": [
       {
         "name": "Page Bonifaci",
